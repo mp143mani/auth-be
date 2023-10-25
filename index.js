@@ -1,19 +1,18 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-dotenv.config();
-const app = express();
+const express = require('express')
+const dotenv = require('dotenv')
+const cors = require('cors')
+dotenv.config()
+const app = express()
 app.use(cors())
 
+const PORT = process.env.PORT
 
-const PORT = process.env.PORT;
+const indexRouter = require('./router/index')
+const userRouter = require('./router/user')
 
-const indexRouter = require("./routes/index");
-const userRouter = require("./routes/user");
+app.use(express.json())
 
-app.use(express.json());
+app.use('/',indexRouter)
+app.use('/user',userRouter)
 
-app.use("/", indexRouter);
-app.use("/user", userRouter);
-
-app.listen(PORT, () => console.log(`seriver listening on port ${PORT}`));
+app.listen(PORT,()=>console.log("App is listening port "+PORT))
